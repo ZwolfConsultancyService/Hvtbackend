@@ -1,16 +1,16 @@
-const admin=require("../Model/adminschema")
-const bcrypt=require("bcrypt")
-const jwt=require ("jsonwebtoken")
+const admin = require("../Model/adminschema")
+const bcrypt = require("bcrypt")
+const jwt = require("jsonwebtoken")
 require("dotenv").config()
 
 
-const login =async(req,res)=>{
+const login = async (req, res) => {
 
-const { email, password } = req.body;
-
+    const { email, password } = req.body;
+    console.log(req.body);
     try {
         const admin = await admin.findOne({
-            email: email ,
+            email: email,
         })
         if (!admin) {
             return res.status(401).json({
@@ -23,7 +23,7 @@ const { email, password } = req.body;
                 message: "invalid password"
             })
         }
-        let payload = {admin}
+        let payload = { admin }
         const token = jwt.sign(payload, process.env.secret_key)
         return res.status(200).json({
             message: "User Logged in Successfully",
@@ -37,6 +37,6 @@ const { email, password } = req.body;
         })
     }
 }
-module.exports={
+module.exports = {
     login
 }

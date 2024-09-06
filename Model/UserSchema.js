@@ -1,13 +1,15 @@
 const express = require("express");
 const mongoose =require("mongoose")
 const userSchema = mongoose.Schema({
-    Name: { type: String, required: true },
-    mobNumber: { type:Number, required: true },
-    Email: { type: String, required: true },
-    Date: { type: String, require: true },
-    Numberofadults: { type: Number, require: true },
-    category: { type: String, require: true },
-    message: { type: String}
+    Name: { type: String,},
+    mobNumber: { type:Number,  },
+    Email: { type: String,  },
+    Date: { type: String, },
+    Numberofadults: { type: Number,  },
+    category: { type: String,  },
+    message: { type: String},
+    user:{},
+    locations:{}
 
 }, { timestamps: true })
 const User = mongoose.model("User", userSchema)

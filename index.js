@@ -16,7 +16,7 @@ app.use(express.json({extended:true,limit:"5mb"}))
 app.use(express.urlencoded({extended:true,limit:"5mb"}))
 
 app.use(morgan("dev"))
-app.use("/user",userRoute)  
+app.use("/user",userRoute) 
 app.use("/admin",adminroutes)
 app.use("/ ", (req, res) => {
     res.send('server is running  ')

@@ -1,6 +1,6 @@
 const express = require('express');
 const User = require("../Model/UserSchema")
-
+const jwt = require('jsonwebtoken');
 const createUser = async (req, res) => {
 
     const data = req.body;
@@ -21,6 +21,27 @@ const createUser = async (req, res) => {
     }
 }
 
+
+
+const authenticate = (req, res, next) => {
+  const usertoken = req.headers.authorization;
+  if (!usertoken) {
+    return res.status(401).json({
+      message: "unauthorization"
+    })
+  }
+  try {
+    const token = usertoken.split(" ")
+    const jwt_token = token[1];
+    const data = jwt.verify(jwt_token, process.env.Secret_key);
+    req.user = data.user;
+    next();
+  } catch (err) {
+    return res.status(500).json({
+      message: err.message,
+    });
+  }
+};
 const getUser=async(req,res)=>{
     try {
         const users = await User.find({})
