@@ -5,7 +5,7 @@ const userRoute = require("./Routes/UserRoutes.js");
 const adminroutes = require("./Routes/adminroutes.js");
 const cors = require('cors');
 const morgan = require("morgan");
-require("dotenv").config();
+require("dotenv").config(); // Load environment variables from .env file
 
 const app = express();
 
@@ -28,20 +28,17 @@ app.get("/", (req, res) => {
     res.send('Server is running');
 });
 
-
+// Fetch the PORT from environment variables, use 8000 as fallback
+const PORT = process.env.PORT || 8000;
 
 // Connect to MongoDB and start the server
-mongoose.connect(process.env.mongoDB_URL, { 
-    useNewUrlParser: true, 
-    useUnifiedTopology: true 
-})
-.then(() => {
-    app.listen(PORT, () => {
-        console.log(`Server is up and running on port ${PORT}`);
-        console.log("Connected to the database");
+mongoose.connect(process.env.mongoDB_URL)
+    .then(() => {
+        app.listen(PORT, () => {
+            console.log(`Server is up and running on port ${PORT}`);
+            console.log("Connected to the database");
+        });
+    })
+    .catch((err) => {
+        console.log("Error connecting to the database:", err.message);
     });
-})
-.catch((err) => {
-    console.log("Error connecting to the database:", err.message);
-});
-
