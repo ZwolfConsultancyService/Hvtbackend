@@ -28,14 +28,20 @@ app.get("/", (req, res) => {
     res.send('Server is running');
 });
 
+
+
 // Connect to MongoDB and start the server
-mongoose.connect(process.env.mongoDB_URL, {})
-    .then(() => {
-        app.listen(process.env.Port, () => {
-            console.log("Server is up and running");
-            console.log("Connected to the database");
-        });
-    })
-    .catch((err) => {
-        console.log(err.message);
+mongoose.connect(process.env.mongoDB_URL, { 
+    useNewUrlParser: true, 
+    useUnifiedTopology: true 
+})
+.then(() => {
+    app.listen(PORT, () => {
+        console.log(`Server is up and running on port ${PORT}`);
+        console.log("Connected to the database");
     });
+})
+.catch((err) => {
+    console.log("Error connecting to the database:", err.message);
+});
+
